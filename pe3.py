@@ -26,10 +26,8 @@ def decode(encoded_string, shift):
 
 encoded_text = encode(input_text, shift)
 
-print("The encoded text is:", encoded_text)
+print("The list of letters encoded are: " + str(tuple(encoded_text)) + " The encoded text is: " + str(encoded_text))
 
 decoded_text = decode(encoded_text, shift)
 
-print("The decoded text is:", decoded_text)
-
-
+print("The list of letters decoded are: " + str(tuple(decoded_text)) + " The encoded text is: " + str(decoded_text))
