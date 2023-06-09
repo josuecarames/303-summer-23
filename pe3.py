@@ -1,7 +1,7 @@
 # 1. Functions
 
 alphabet = "abcdefghijklmnopqrstuvwxyz"
-input_text = input("Enter the text you want to encode: ").lower()
+input_text = input("Enter the text you want to encode: ").lower() # If text is not converted into lower case, the encryption doesn't work
 shift = int(input("Please enter the shift you want to use to encode the entered text: "))
 
 def encode(input_text, shift):
