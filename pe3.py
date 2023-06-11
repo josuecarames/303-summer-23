@@ -38,7 +38,6 @@ print("The list of letters decoded are: " + str(tuple(decoded_text)) + " The dec
 
 # # Import modules
 
-import datetime
 from datetime import date, timedelta
 
 class BankAccount:
