@@ -48,7 +48,7 @@ class BankAccount:
         self.balance = balance
         if self.creation_date > date.today():
             raise Exception("creation_date cannot be a future date")
-        self.maturity_date = self.creation_date + timedelta(days=180)
+        self.maturity_date = self.creation_date + timedelta(days=180) # We need to add 'self.' to maturity_date because it needs to be accessed within the 'SavingsAccount' class.
 
     def deposit(self, amount):
         self.balance += amount
