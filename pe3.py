@@ -36,12 +36,11 @@ print("The list of letters decoded are: " + str(tuple(decoded_text)) + " The dec
 
 #2 Classes
 
-# # Import modules
-
+import datetime
 from datetime import date, timedelta
 
 class BankAccount:
-    def __init__(self, name="Clocks", ID="123", creation_date=datetime.date.today(), balance=0):
+    def __init__(self, name="Clocks", ID="123", creation_date=date.today(), balance=0):
         self.name = name
         self.ID = ID
         self.creation_date = creation_date
@@ -77,28 +76,46 @@ class CheckingAccount(BankAccount):
             super().withdraw(amount)
 
 
-# test = BankAccount(name="test", ID="321", creation_date=date(2023, 6, 9), balance=0) # BankAccount class works
+# Test to see if BankAccount class works
 
-# test = BankAccount(name="test", ID="321", creation_date=date(2023, 9, 9), balance=0) # Future date raises Exception
+test = BankAccount(name="test", ID="321", creation_date=date(2023, 6, 9), balance=0) # BankAccount class works
 
-# test.withdraw(25)
+print(test.name, test.ID, test.creation_date, test.balance)
 
-# print("Updated balance: ", test.view_balance())
+# First test to see if overdraft works in CheckingAccount
 
-# test = CheckingAccount(name="test", ID="321", creation_date=date(2023, 6, 9), balance=0) # Overdraft +$30
+test1 = CheckingAccount(name="test1", ID="321", creation_date=date(2023, 6, 9), balance=0) # Overdraft +$30
 
-# test = SavingsAccount(name="test", ID="321", creation_date=datetime.date(2023, 1, 1), balance=100) # Account maturity older than 6 months 
+print("Balance before withdrawal: ", test1.view_balance())
 
-# print(test.name, test.ID, test.creation_date, test.balance)
+test1.withdraw(25)
 
-# test.withdraw(25)
+print("Updated balance: ", test1.view_balance())
 
-# print("Updated balance: ", test.view_balance())
+# Second test to see if we can make a withdrawal from a SavingsAccount that is older than 6 months
 
-# test = SavingsAccount(name="test", ID="321", creation_date=datetime.date.today(), balance=100) # Account maturity younger than 6 months doesn't withdraw from balance
+test2 = SavingsAccount(name="test2", ID="321", creation_date=datetime.date(2023, 1, 1), balance=100) # Account maturity older than 6 months 
 
-# print(test.name, test.ID, test.creation_date, test.balance)
+print(test2.name, test2.ID, test2.creation_date, test2.balance)
 
-# test.withdraw(25)
+test2.withdraw(25)
 
-# print("Updated balance: ", test.view_balance())
+print("Updated balance: ", test2.view_balance())
+
+# Third test to see if we can make a withdrawal from a SavingsAccount that is younger than 6 months
+
+test3 = SavingsAccount(name="test3", ID="321", creation_date=datetime.date.today(), balance=100)
+
+print(test3.name, test3.ID, test3.creation_date, test3.balance)
+
+test3.withdraw(25)
+
+print("Updated balance: ", test3.view_balance())
+
+# Fourth test to see if we can create an account with a future date for creation_date 
+
+test4 = BankAccount(name="test4", ID="321", creation_date=date(2024, 9, 9), balance=0) # Future date raises Exception
+
+test4.withdraw(25)
+
+print("Updated balance: ", test4.view_balance())
