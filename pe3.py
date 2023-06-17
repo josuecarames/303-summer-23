@@ -1,63 +1,81 @@
-import string
-import datetime
-from datetime import date, timedelta
+# 1. Functions
 
-all_chars = str(string.ascii_letters + string.digits + string.punctuation.replace('\\', '') + ' ')
+import string
+
+alphabet_list = [chr(ord('a') + i) for i in range(26)]
 
 def encode(input_text, shift):
-    encoded_chars = []
-    for char in input_text:
-        if char in all_chars:
-            encoded_index = (all_chars.index(char) + shift) % len(all_chars)
-            encoded_char = all_chars[encoded_index]
-            encoded_chars.append(encoded_char)
+    shifted_alphabet_list = []
+    input_text = input_text.lower()
+    for character in input_text:
+        if character not in alphabet_list:
+            shifted_character = character
+            shifted_alphabet_list.append(shifted_character)
         else:
-            encoded_chars.append(char)
-    return ''.join(encoded_chars)
+            shifted_character = alphabet_list[(alphabet_list.index(character) + shift) % 26]
+            shifted_alphabet_list.append(shifted_character)
+    shifted_alphabet_str = ''.join(shifted_alphabet_list)
+    return (alphabet_list, shifted_alphabet_str)
 
-def decode(encoded_string, shift):
-    decoded_chars = []
-    for char in encoded_string:
-        if char in all_chars:
-            decoded_index = (all_chars.index(char) - shift) % len(all_chars)
-            decoded_char = all_chars[decoded_index]
-            decoded_chars.append(decoded_char)
+def decode(input_text, shift):
+    shifted_alphabet_list = []
+    input_text = input_text.lower()
+    for character in input_text:
+        if character not in alphabet_list:
+            shifted_character = character
+            shifted_alphabet_list.append(shifted_character)
         else:
-            decoded_chars.append(char)
-    return ''.join(decoded_chars)
+            shifted_character = alphabet_list[(alphabet_list.index(character) - shift + 26) % 26]
+            shifted_alphabet_list.append(shifted_character)
+    shifted_alphabet_str = ''.join(shifted_alphabet_list)
+    return shifted_alphabet_str
 
-class BankAccount:
-    def __init__(self, name="Clocks", ID="123", creation_date=None, balance=0):
-        if creation_date is None:
-            creation_date = date.today()
+# 2 Classes
+
+import datetime
+
+class BankAccountExceptions(Exception):
+    pass
+    
+class BankAccount():
+    def __init__(self, name='Clocks', ID='123', creation_date=datetime.date.today(), balance=0):
+        if not isinstance(creation_date, datetime.date):
+            raise BankAccountExceptions("creation_date should be the type of datetime.date.")
         self.name = name
         self.ID = ID
         self.creation_date = creation_date
         self.balance = balance
-        if self.creation_date > date.today():
-            raise Exception("creation_date cannot be a future date")
-        self.maturity_date = self.creation_date + timedelta(days=180)
+        self.validate_creation_date()
+
+    def validate_creation_date(self):
+        current_date = datetime.date.today()
+        if self.creation_date > current_date:
+            raise BankAccountExceptions("creation_date cannot be a future date.")
 
     def deposit(self, amount):
-        self.balance += amount
+        if amount >= 0:
+            self.balance += amount
+        return self.balance
 
     def withdraw(self, amount):
-        self.balance -= amount
+        if amount >= 0:
+            self.balance -= amount
+        return self.balance
 
     def view_balance(self):
         return self.balance
 
 class SavingsAccount(BankAccount):
     def withdraw(self, amount):
-        current_date = datetime.date.today()
-        if current_date >= self.maturity_date:
-            super().withdraw(amount)
-        else:
-            raise Exception("You cannot make a withdrawal before your account has reached 6 months maturity")
+        one_day = datetime.timedelta(days=1)
+        if datetime.date.today() + one_day * 30 * 6 >= self.creation_date and self.balance - amount >= 0 and amount >= 0:
+            self.balance -= amount
+        return self.balance
 
 class CheckingAccount(BankAccount):
     def withdraw(self, amount):
-        if self.balance - amount < 0:
-            self.balance -= (amount + 30)
+        if self.balance - amount >= 0 and amount >= 0:
+            self.balance -= amount
         else:
-            super().withdraw(amount)
+            self.balance -= amount + 30
+        return self.balance
