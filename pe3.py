@@ -114,8 +114,4 @@ print("Updated balance: ", test3.view_balance())
 
 # Fourth test to see if we can create an account with a future date for creation_date 
 
-test4 = BankAccount(name="test4", ID="321", creation_date=date(2024, 9, 9), balance=0) # Future date raises Exception
-
-test4.withdraw(25)
-
-print("Updated balance: ", test4.view_balance())
+test4 = BankAccount(name="test4", ID="321", creation_date=date(2024, 9, 9), balance=50) # Future date raises Exception
