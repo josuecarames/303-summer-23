@@ -1,3 +1,23 @@
-venv/
+# Ignore IDE and editor files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Ignore logs and temporary files
+logs/
+temp/
+project/__pycache__/
+*.log
+*.tmp
+
+# Ignore database files
+instance/db.sqlite
+
+# Ignore a specific directory and its contents
 .git/
+venv/
+
+# Ignore all files with a specific extension
+*.log
 .DS_Store
