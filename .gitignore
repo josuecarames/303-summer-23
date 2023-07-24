@@ -7,12 +7,10 @@
 # Ignore logs and temporary files
 logs/
 temp/
-project/__pycache__/
+./__pycache__/*
 *.log
 *.tmp
-
-# Ignore database files
-instance/db.sqlite
+./pytest_cache/*
 
 # Ignore a specific directory and its contents
 .git/
