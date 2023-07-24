@@ -7,7 +7,7 @@
 # Ignore logs and temporary files
 logs/
 temp/
-./__pycache__/*
+__pycache__/
 *.log
 *.tmp
 ./pytest_cache/*
