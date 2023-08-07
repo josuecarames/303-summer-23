@@ -1,7 +1,0 @@
-LICENSE
-README.md
-setup.py
-mypoems.egg-info/PKG-INFO
-mypoems.egg-info/SOURCES.txt
-mypoems.egg-info/dependency_links.txt
-mypoems.egg-info/top_level.txt
